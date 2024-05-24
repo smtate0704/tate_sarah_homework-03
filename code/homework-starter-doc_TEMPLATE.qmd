@@ -152,11 +152,11 @@ ggplot(data = drought_exp_clean, # data frame
 
 What is the null model?  
 
-0. **null model here**  
+0. **total biomass as a function of none of the predictors**  
 
 What is the saturated model?  
 
-1. **saturated model here**  
+1. **total biomass as a function of SLA, water treatment, and species**  
 
 In class we are going to try two more models:  
 
@@ -188,6 +188,10 @@ plot(model1)
 # you might get a warning when you run this code - that is ok!
 ```
 
+**Diagnostics look ok**
+
+
+
 ## 2. total biomass as a function of SLA and water treatment
 
 ```{r}
@@ -196,7 +200,7 @@ model2 <- lm(total_g ~ sla + water_treatment,
 
 plot(model2)
 ```
-
+**LOOK AT DIAGNOSTICS**
 ## 3. total biomass as a function of SLA and species
 
 ```{r}
@@ -205,6 +209,8 @@ model3 <- lm(total_g ~ sla + species_name,
 
 plot(model3)
 ```
+**LOOK AT DIAGNOSTICS**
+
 
 # Model selection
 
@@ -217,9 +223,11 @@ model.sel(model0,
           model3)
 ```
 
-Out of the four models we have tried, the best model is the one that includes **insert predictors here**  
+Out of the four models we have tried, the best model is the one that includes **all three predictors (sla, species, water treatment)**  
 
-Note that this may change once you fit and compare the other model!
+Note that this may change once you fit and compare the other model!!!!!!
+
+**DOUBLE CHECK DIAGNOSTICS FOR THE BEST MODEL**
 
 # Model summary
 
@@ -232,14 +240,14 @@ What are the reference levels?
 - reference for `water_treatment`  
 - reference for `species_name`  
 
-**reference for water_treatment:** **insert response here**  
-**reference for species_name:** **insert response here**  
+**reference for water_treatment:** **drought stressed**  
+**reference for species_name:** **Acmispon glaber (deerweed)**  
 
 Interpret the model estimates for the:  
 
-- intercept: **insert response here**  
-- SLA slope: **insert response here**  
-- well watered estimate: **insert response here**    
+- intercept: **mass of reference Acmispon glaber in drought stressed treatment when sla = 0**  
+- SLA slope: **for each one unit increase in sla (mm^2^/mass), you expect a decrease in plant mass of -0.0002 (figure out how to display plus minus in doc for SE) 0.0005; NO EFFECT OF SLA ON MASS**  
+- well watered estimate: **on average, across species and sla, well watered plants tend to be 0.012 plus minus 0.02 g heaver (or more massive) than drought stressed plants; WATER TREATMENT SIGNIFICANT PREDICTS TOTAL MASS**    
 - Lotus scoparius estimate: **insert response here**    
 - Stipa pulchra estimate: **insert response here**    
 
