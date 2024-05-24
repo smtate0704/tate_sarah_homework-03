@@ -95,11 +95,11 @@ ggpairs(drought_exp_clean, # data frame
 
 Choose 3 pairs of variables to compare. Make notes of those comparisons below.    
 
-**insert comparison 1 here**  
+**Leaf dry weight is strongly positively correlated with root mass (Pearson's r = 0.367)**  
 
-**insert comparison 2 here**  
+**Shoot mass is strongly positively correlated with specific leaf area (Pearson's r = 0.348)**  
 
-**insert comparison 3 here**
+**Root mass is strong positively correlated with shoot mass (Pearson's r = 0.553)**
 
 ## Preliminary visualizations  
 
@@ -123,7 +123,7 @@ ggplot(data = drought_exp_clean, # data frame
               height = 0) # not jittering points up and down
 ```
 
-**response here**
+**Total biomass does seem to differ between species, with Grindellia camporum having the highest biomass and Acmipson glaber having the lowest biomass. Gumweed, california poppy, and purple needlegrass seems to have highest biomass; deerweed, scarlet bugler, and purple sage seem to have the lowest biomass.**
 
 ### how does total biomass differ between water treatments?
 
@@ -135,7 +135,7 @@ ggplot(data = drought_exp_clean, # data frame
               height = 0) # not jittering points up and down
 ```
 
-**response here**
+**Total biomass is higher for well watered plants and lower for drought stressed plants.**
 
 ### how does specific leaf area (SLA) influence total biomass?
 
@@ -146,7 +146,7 @@ ggplot(data = drought_exp_clean, # data frame
   geom_point() # scatterplot
 ```
 
-**response here**
+**As specific leaf area increases, total biomass also increases. moderate or strong correlation (relationship) depending on how you round**
 
 # Model construction
 
