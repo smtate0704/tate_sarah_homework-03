@@ -61,13 +61,61 @@ drought_exp_clean <- drought_exp %>%
   relocate(water_treatment, .after = water) # moving water_treatment column after water
 ```
 
+```{r}
+# null model
+model0 <- lm(total_g ~ 1, # formula
+             data = drought_exp_clean) # data frame
+
+# saturated model
+model1 <- lm(total_g ~ sla + water_treatment + species_name,
+             data = drought_exp_clean)
+
+# model 2: total mass as predicted by specific leaf area and water treatment
+model2 <- lm(total_g ~ sla + water_treatment,
+             data = drought_exp_clean)
+
+# model 3: total mass as predicted by specific leaf area and species name
+model3 <- lm(total_g ~ sla + species_name,
+             data = drought_exp_clean)
+
+# model 4: total mass as predicted by species name and water treatments
+model4 <- lm(total_g ~ water_treatment + species_name,
+             data = drought_exp_clean)
+```
+
+```{r}
+model.sel(model0,
+          model1, 
+          model2, 
+          model3,
+          model4)
+```
+MODEL 4 IS BEST
+
+
+```{r}
+# comparing models
+modelsummary::modelsummary( # this function takes a list of models
+  list( 
+    "null" = model0, # "model name" = model object
+    "model 1" = model1,
+    "model 2" = model2,
+    "model 3" = model3,
+    "model 4" = model4
+  )
+) 
+```
+
+
+
+
 Problem 1: Multiple linear regression - model selection and construction
 
 a)
 
 b)
 
-c)
+c) MODEL 4 IS BEST BASED ON TEST, CHECK DIAGNOSTICS
 
 d)
 
