@@ -1,0 +1,103 @@
+---
+title: "Homework 03"
+author: "Sarah Tate"
+format:
+  html: 
+    toc: true # includes a table of contents in rendered html format
+execute: # for all code chunks
+    warning: false # do not display warnings
+    message: false # do not display messages
+---
+
+```{r}
+# general use
+library(tidyverse)
+library(readxl)
+library(here)
+library(janitor)
+
+# visualizing pairs
+library(GGally)
+
+# model selection
+library(MuMIn)
+
+# model predictions
+library(ggeffects)
+
+# model tables
+library(gtsummary)
+library(flextable)
+library(modelsummary)
+
+drought_exp <- read_xlsx(path = here("data", 
+                                     "Valliere_etal_EcoApps_Data.xlsx"),
+                         sheet = "First Harvest")
+
+# quick look at data 
+str(drought_exp)
+class(drought_exp)
+```
+
+
+```{r}
+# cleaning
+drought_exp_clean <- drought_exp %>% 
+  clean_names() %>% # nicer column names
+  mutate(species_name = case_when( # adding column with species scientific names
+    species == "ENCCAL" ~ "Encelia californica", # bush sunflower
+    species == "ESCCAL" ~ "Eschscholzia californica", # California poppy
+    species == "PENCEN" ~ "Penstemon centranthifolius", # Scarlet bugler
+    species == "GRICAM" ~ "Grindelia camporum", # great valley gumweed
+    species == "SALLEU" ~ "Salvia leucophylla", # Purple sage
+    species == "STIPUL" ~ "Nasella pulchra", # Purple needlegrass
+    species == "LOTSCO" ~ "Acmispon glaber" # deerweed
+  )) %>% 
+  relocate(species_name, .after = species) %>% # moving species_name column after species
+  mutate(water_treatment = case_when( # adding column with full treatment names
+    water == "WW" ~ "Well watered",
+    water == "DS" ~ "Drought stressed"
+  )) %>% 
+  relocate(water_treatment, .after = water) # moving water_treatment column after water
+```
+
+Problem 1: Multiple linear regression - model selection and construction
+
+a)
+
+b)
+
+c)
+
+d)
+
+e)
+
+
+Problem 2: Affective visualization
+
+
+a)
+
+b)
+
+c)
+
+d)
+
+
+Problem 3: Statistical critique
+
+
+a)
+
+b)
+
+c)
+
+d)
+
+
+
+
+
