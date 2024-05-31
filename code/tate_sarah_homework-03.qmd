@@ -119,7 +119,9 @@ summary(model4)
 
 Problem 1: Multiple linear regression - model selection and construction
 
-a)
+a) 
+
+
 
 b)
 
@@ -164,7 +166,8 @@ ggplot() +
   facet_wrap(~species_name)+ 
   theme(legend.position = "none")+
   labs(x = "Water Treatment",
-       y = "Total Biomass (g)") +
+       y = "Total Biomass (g)",
+       title = "Figure 1: Total Biomass (g) Predicted By Plant Species And Water Treatment") +
   scale_color_manual(values = c("Well watered" = "steelblue4",
                                 "Drought stressed" = "gold4"))
 
