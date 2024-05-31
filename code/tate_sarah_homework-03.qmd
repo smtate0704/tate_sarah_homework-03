@@ -126,15 +126,6 @@ model.sel(model0,
           model4) # code for comparing models to each other to find model of best fit
 ```
 
-### Model 4 Summary Statistics
-```{r}
-
-summary(model4)
-
-```
-
-
-
 
 ## Problem 1: Multiple linear regression - model selection and construction
 
@@ -157,7 +148,7 @@ model_preds_for_plotting <- model_preds %>% # new data frame for plotting predic
          species_name = group)
 
 
-ggplot() +
+ggplot() + # creating a plot for model 4 data
   # underlying data
  geom_point(data = drought_exp_clean, # choosing data frame
              alpha = 0.1, # transparency of points
@@ -192,7 +183,13 @@ ggplot() +
 ### d) 
   Figure 1: Total Biomass (g) Predicted By Plant Species and Water Treatment. The underlying data represents experimental results for total biomass of different species based on different water treatments. Bold points represent model predictions for the relationship between variables. Error bars represent a 95% confidence interval for the model predictions. (Valliere, Justin; Zhang, Jacqueline; Sharifi, M.; Rundel, Philip (2019). Data from: "Can we condition native plants to increase drought tolerance and improve restoration success?" [Dataset]. Dryad. https://doi.org/10.5061/dryad.v0861f7)
 
-### e)
+### e) 
+Plant species and water treatment best predicted total biomass (g) (Linear Model, F(7,62) = 27.08, R^2^ = 0.7257, p < 0.0001, ⍺ = 0.05). On average, with plant species held constant at the reference species Acmispon glaber (deerweed), well watered plants are larger than drought stressed plants by 0.117 ± 0.017 g. On average, plant species are 0.194 ± 0.03243 g larger than the reference species of deerweed when the water treatment is held constant. The plant species Grandelia camporum is the largest, which a total biomass which is 0.313 ± 0.03243 g larger than the references species (deerweed). 
+
+### Model 4 Summary Statistics
+```{r}
+summary(model4)
+```
 
 
 ## Problem 2: Affective visualization
