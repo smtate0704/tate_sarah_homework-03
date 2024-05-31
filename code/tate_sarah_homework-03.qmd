@@ -9,7 +9,12 @@ execute: # for all code chunks
     message: false # do not display messages
 ---
 
-## Loading in libraries/data from workshop
+## GitHub Repo Link:
+
+
+## Setup for Homework:
+
+### Loading in libraries/data from workshop
 
 ```{r}
 # general use
@@ -33,7 +38,7 @@ drought_exp <- read_xlsx(path = here("data",
 
 ```
 
-## Cleaning data frame 
+### Cleaning data frame 
 
 ```{r}
 # cleaning
@@ -56,7 +61,7 @@ drought_exp_clean <- drought_exp %>%
   relocate(water_treatment, .after = water) # moving water_treatment column after water
 ```
 
-## Correlation plots for comparing variable relationships
+### Correlation plots for comparing variable relationships
 ```{r}
 ggpairs(drought_exp_clean, # data frame
         columns = c("leaf_dry_weight_g", # columns to visualize
@@ -68,7 +73,7 @@ ggpairs(drought_exp_clean, # data frame
   theme_bw() + # cleaner theme
   theme(panel.grid = element_blank()) # getting rid of gridlines
 ```
-## Assigning models with different variables
+### Assigning models with different variables
 
 ```{r}
 # null model
@@ -112,7 +117,7 @@ par(mfrow = c(2, 2))
 plot(model4)
 ```
 
-## Model Selection to determine model of best fit
+### Model Selection to determine model of best fit
 ```{r}
 model.sel(model0,
           model1, 
@@ -121,7 +126,7 @@ model.sel(model0,
           model4) # code for comparing models to each other to find model of best fit
 ```
 
-## Model 4 Summary Statistics
+### Model 4 Summary Statistics
 ```{r}
 
 summary(model4)
@@ -133,13 +138,13 @@ summary(model4)
 
 ## Problem 1: Multiple linear regression - model selection and construction
 
-a) 
+### a) 
+  Table 1: Model Selection Data. The first column represents the model number, the second column represents which variables are present in each model, and the AIC and delta AIC values for each model are in the last two columns. Model 4 is the "best" model (AIC = -156.2, delta AIC = 0).
 
+### b) 
+  To address to central question of if total biomass (g) was influenced by specific leaf area, plant species, and/or water treatment, I assigned different models to a combination of the variables to determine which model contained the best predictor for total biomass. Model 0 included none of the variables, model 1 included all of them, and models 2-4 included combinations of 2 of the 3 variables. I used the model selection function in R to determine which model best explained the data found during experiment. It was shown that model 4 was the "best" model, which contained the variables of plant species and water treatment (AIC = -156.2, delta AIC = 0). With the largest AIC and a delta AIC of 0, it was concluded that model 4 contained the predictor variables which best explained the trends in the data. To finalize this conclusion, I determined that this model conformed to the assumptions of a linear model by creating 4 diagnostic plots to evaluate homoscedasticity, normality, and potential outliers. Through visual analysis of these plots, I determined that model 4 does conform to the assumptions of the linear model and is therefore the "best" model to predict total biomass. 
 
-
-b)
-
-c) 
+### c) 
 
 ```{r}
 
@@ -184,33 +189,34 @@ ggplot() +
 ```
 
 
-d)
+### d) 
+  Figure 1: Total Biomass (g) Predicted By Plant Species and Water Treatment. The underlying data represents experimental results for total biomass of different species based on different water treatments. Bold points represent model predictions for the relationship between variables. Error bars represent a 95% confidence interval for the model predictions. (Valliere, Justin; Zhang, Jacqueline; Sharifi, M.; Rundel, Philip (2019). Data from: "Can we condition native plants to increase drought tolerance and improve restoration success?" [Dataset]. Dryad. https://doi.org/10.5061/dryad.v0861f7)
 
-e)
+### e)
 
 
 ## Problem 2: Affective visualization
 
 
-a)
+### a)
 
-b)
+### b)
 
-c)
+### c)
 
-d)
+### d)
 
 
 ## Problem 3: Statistical critique
 
 
-a)
+### a)
 
-b)
+### b)
 
-c)
+### c)
 
-d)
+### d)
 
 
 
