@@ -286,8 +286,7 @@ The "more customizable" way:
 # creating new data frame of model predictions for plotting
 model_preds_for_plotting <- model_preds %>% 
   rename(sla = x, # renaming columns to make this easier to use
-         water_treatment = group,
-         species_name = facet)
+         water_treatment = group)
 
 # use View(model_preds_for_plotting) 
 # to compare this to the original model_preds data frame
@@ -315,6 +314,9 @@ ggplot() +
   theme_classic() +
   # creating different panels for species
   facet_wrap(~species_name) 
+
+```
+
 ```
 
 

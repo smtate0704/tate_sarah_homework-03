@@ -34,9 +34,6 @@ drought_exp <- read_xlsx(path = here("data",
                                      "Valliere_etal_EcoApps_Data.xlsx"),
                          sheet = "First Harvest")
 
-# quick look at data 
-str(drought_exp)
-class(drought_exp)
 ```
 
 
@@ -61,6 +58,20 @@ drought_exp_clean <- drought_exp %>%
   relocate(water_treatment, .after = water) # moving water_treatment column after water
 ```
 
+#correlations
+```{r}
+ggpairs(drought_exp_clean, # data frame
+        columns = c("leaf_dry_weight_g", # columns to visualize
+                    "sla", 
+                    "shoot_g", 
+                    "root_g", 
+                    "total_g"), 
+        upper = list(method = "pearson")) + # calculating Pearson correlation coefficient
+  theme_bw() + # cleaner theme
+  theme(panel.grid = element_blank()) # getting rid of gridlines
+```
+
+
 ```{r}
 # null model
 model0 <- lm(total_g ~ 1, # formula
@@ -81,6 +92,10 @@ model3 <- lm(total_g ~ sla + species_name,
 # model 4: total mass as predicted by species name and water treatments
 model4 <- lm(total_g ~ water_treatment + species_name,
              data = drought_exp_clean)
+
+#diagnostics for model 4
+par(mfrow = c(2, 2))
+plot(model4)
 ```
 
 ```{r}
@@ -94,16 +109,9 @@ MODEL 4 IS BEST
 
 
 ```{r}
-# comparing models
-modelsummary::modelsummary( # this function takes a list of models
-  list( 
-    "null" = model0, # "model name" = model object
-    "model 1" = model1,
-    "model 2" = model2,
-    "model 3" = model3,
-    "model 4" = model4
-  )
-) 
+
+summary(model4)
+
 ```
 
 
@@ -116,6 +124,52 @@ a)
 b)
 
 c) MODEL 4 IS BEST BASED ON TEST, CHECK DIAGNOSTICS
+
+```{r}
+
+model_preds <- ggpredict(model4, 
+                         terms = c("water_treatment", 
+                                   "species_name"))
+
+model_preds_for_plotting <- model_preds %>% 
+  rename(water_treatment = x, # renaming columns to make this easier to use
+         species_name = group)
+
+
+ggplot() +
+  # underlying data
+ geom_point(data = drought_exp_clean,
+             alpha = 0.1,
+             aes(x = water_treatment,
+                 y = total_g,
+                color = water_treatment)) +
+  # model prediction 95% CI ribbon
+  geom_point(data = model_preds_for_plotting,
+              aes(x = water_treatment, 
+                  y = predicted,
+                  color = water_treatment),
+              alpha = 1) +
+  # model prediction lines
+  geom_errorbar(data = model_preds_for_plotting,
+            aes(x = water_treatment, 
+                y = predicted,
+                ymin = conf.low, 
+                ymax = conf.high,
+                fill = water_treatment),
+            width = 0.1,
+            alpha = 0.5) +
+  # cleaner theme
+  theme_classic() +
+  # creating different panels for species
+  facet_wrap(~species_name)+ 
+  theme(legend.position = "none")+
+  labs(x = "Water Treatment",
+       y = "Total Biomass (g)") +
+  scale_color_manual(values = c("Well watered" = "steelblue4",
+                                "Drought stressed" = "gold4"))
+
+```
+
 
 d)
 
