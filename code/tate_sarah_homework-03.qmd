@@ -1,13 +1,15 @@
 ---
 title: "Homework 03"
 author: "Sarah Tate"
-format:
-  html: 
+format: 
+  docx: 
     toc: true # includes a table of contents in rendered html format
 execute: # for all code chunks
     warning: false # do not display warnings
     message: false # do not display messages
 ---
+
+## Loading in libraries/data from workshop
 
 ```{r}
 # general use
@@ -25,17 +27,13 @@ library(MuMIn)
 # model predictions
 library(ggeffects)
 
-# model tables
-library(gtsummary)
-library(flextable)
-library(modelsummary)
-
 drought_exp <- read_xlsx(path = here("data", 
-                                     "Valliere_etal_EcoApps_Data.xlsx"),
-                         sheet = "First Harvest")
+                                     "Valliere_etal_EcoApps_Data.xlsx"), # reading in the data from an excel spreadsheet
+                         sheet = "First Harvest") # choosing which sheet to read within the xlsx
 
 ```
 
+## Cleaning data frame 
 
 ```{r}
 # cleaning
@@ -58,7 +56,7 @@ drought_exp_clean <- drought_exp %>%
   relocate(water_treatment, .after = water) # moving water_treatment column after water
 ```
 
-#correlations
+## Correlation plots for comparing variable relationships
 ```{r}
 ggpairs(drought_exp_clean, # data frame
         columns = c("leaf_dry_weight_g", # columns to visualize
@@ -70,24 +68,40 @@ ggpairs(drought_exp_clean, # data frame
   theme_bw() + # cleaner theme
   theme(panel.grid = element_blank()) # getting rid of gridlines
 ```
-
+## Assigning models with different variables
 
 ```{r}
 # null model
 model0 <- lm(total_g ~ 1, # formula
              data = drought_exp_clean) # data frame
 
-# saturated model
+#diagnostics for model 0
+par(mfrow = c(2, 2))
+plot(model0)
+
+# saturated model (model 1)
 model1 <- lm(total_g ~ sla + water_treatment + species_name,
              data = drought_exp_clean)
+
+#diagnostics for model 1
+par(mfrow = c(2, 2))
+plot(model1)
 
 # model 2: total mass as predicted by specific leaf area and water treatment
 model2 <- lm(total_g ~ sla + water_treatment,
              data = drought_exp_clean)
 
+#diagnostics for model 2
+par(mfrow = c(2, 2))
+plot(model2)
+
 # model 3: total mass as predicted by specific leaf area and species name
 model3 <- lm(total_g ~ sla + species_name,
              data = drought_exp_clean)
+
+#diagnostics for model 3
+par(mfrow = c(2, 2))
+plot(model3)
 
 # model 4: total mass as predicted by species name and water treatments
 model4 <- lm(total_g ~ water_treatment + species_name,
@@ -98,16 +112,16 @@ par(mfrow = c(2, 2))
 plot(model4)
 ```
 
+## Model Selection to determine model of best fit
 ```{r}
 model.sel(model0,
           model1, 
           model2, 
           model3,
-          model4)
+          model4) # code for comparing models to each other to find model of best fit
 ```
-MODEL 4 IS BEST
 
-
+## Model 4 Summary Statistics
 ```{r}
 
 summary(model4)
@@ -117,7 +131,7 @@ summary(model4)
 
 
 
-Problem 1: Multiple linear regression - model selection and construction
+## Problem 1: Multiple linear regression - model selection and construction
 
 a) 
 
@@ -125,51 +139,47 @@ a)
 
 b)
 
-c) MODEL 4 IS BEST BASED ON TEST, CHECK DIAGNOSTICS
+c) 
 
 ```{r}
 
 model_preds <- ggpredict(model4, 
                          terms = c("water_treatment", 
-                                   "species_name"))
+                                   "species_name")) # assigning a model for prediction data based on "best" model
 
-model_preds_for_plotting <- model_preds %>% 
+model_preds_for_plotting <- model_preds %>% # new data frame for plotting prediciton data 
   rename(water_treatment = x, # renaming columns to make this easier to use
          species_name = group)
 
 
 ggplot() +
   # underlying data
- geom_point(data = drought_exp_clean,
-             alpha = 0.1,
+ geom_point(data = drought_exp_clean, # choosing data frame
+             alpha = 0.1, # transparency of points
              aes(x = water_treatment,
                  y = total_g,
-                color = water_treatment)) +
-  # model prediction 95% CI ribbon
-  geom_point(data = model_preds_for_plotting,
+                color = water_treatment)) + # setting x and y variables, and choosing color for variable
+  geom_point(data = model_preds_for_plotting, # choosing data frame to plot prediction data points
               aes(x = water_treatment, 
                   y = predicted,
-                  color = water_treatment),
-              alpha = 1) +
-  # model prediction lines
-  geom_errorbar(data = model_preds_for_plotting,
+                  color = water_treatment), # setting x and y axis variables, and color
+              alpha = 1) + # more bold point for prediction data
+  geom_errorbar(data = model_preds_for_plotting, # choosing data frame
             aes(x = water_treatment, 
-                y = predicted,
+                y = predicted, # setting x and y variables
                 ymin = conf.low, 
-                ymax = conf.high,
+                ymax = conf.high, # setting bounds of 95% CI
                 fill = water_treatment),
-            width = 0.1,
-            alpha = 0.5) +
-  # cleaner theme
-  theme_classic() +
-  # creating different panels for species
-  facet_wrap(~species_name)+ 
-  theme(legend.position = "none")+
+            width = 0.2, # smaller width of errorbars
+            alpha = 0.5) + # more transparent bars so underlying data is easier to see
+  theme_classic() + # cleaner theme, no gridlines
+  facet_wrap(~species_name)+  # creating different panels for species
+  theme(legend.position = "none")+ # getting rid of legend
   labs(x = "Water Treatment",
        y = "Total Biomass (g)",
-       title = "Figure 1: Total Biomass (g) Predicted By Plant Species And Water Treatment") +
+       title = "Figure 1: Total Biomass (g) Predicted By Plant Species And Water Treatment") + # changing x and y labels and adding title
   scale_color_manual(values = c("Well watered" = "steelblue4",
-                                "Drought stressed" = "gold4"))
+                                "Drought stressed" = "gold4")) # setting colors for each water treatment different from original ggplot colors
 
 ```
 
@@ -179,7 +189,7 @@ d)
 e)
 
 
-Problem 2: Affective visualization
+## Problem 2: Affective visualization
 
 
 a)
@@ -191,7 +201,7 @@ c)
 d)
 
 
-Problem 3: Statistical critique
+## Problem 3: Statistical critique
 
 
 a)
