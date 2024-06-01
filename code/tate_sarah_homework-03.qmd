@@ -196,25 +196,36 @@ summary(model4)
 
 
 ### a)
+  An affective visualization for my personal data would include some kind of visualization with yarn and the type of crochet projects I have been making. I have been recording the total minutes I crochet, and what kind of project I am making, as well as several other variables. I think the part of my data which is best visualized affectively is the type of project I created and how long it took me to create it. 
 
-### b)
+### b) 
+sketch:
 
 ### c)
+final:
 
 ### d)
+  This piece shows how long each crochet project took relative to each other. Colors show whether or not the project was completed, and the height of the yarn shows how long the project took. I drew sketches of this idea on my iPad before finalizing this design using Notability on my iPad. I had to sum all of the minutes spent on each project before beginning the design process. 
+
 
 
 ## Problem 3: Statistical critique
 
 
 ### a)
+The authors used a generalized linear mixed model to predict the probability of coral bleaching event based on a variety of environmental factors, such as latitude, depth, coral diversity, etc. Figure 2 shows the model coefficients obtained for each variable relative to their relationship to coral bleaching.
+(Fig 2 image)
 
 ### b)
+  The authors did a good job of visually representing their statistics, as the figure allows the reader to clearly see which predictor variables are strongly correlated with coral bleaching events. The authors included colors in the figure to show which variables has a psoitive, negative, or no contribution to coral bleaching. They used 95% confidence intervals around these predictions, but did not include the underlying data in the figure. The y axis contains all of the variable types and the x axis is the model parameter coefficients, which efficiently displays the statistical analysis. 
+
 
 ### c)
+  While the figure is well organized, there are a lot of variables being analyzed, which makes it look intimidating to the reader. The data:ink ratio is good, with the entire graph being data and not including unnecessary analysis within the plot. Differentiating colors to provide the main results of the plot was a great choice by the author to concisely show the reader which variables had which effect on coral bleaching without much figure analysis. 
+
 
 ### d)
-
+  My only complaint about this figure is the amount of variables that they chose to display on the y axis, since I think this makes the table appear more complicated than it actually is. If it is possible to combine variables, or emit the ones with no correlation to coral bleaching from the figure (but still mention them in the results or in the figure caption), I think this would make the figure more understandable at first glance.
 
 
 
